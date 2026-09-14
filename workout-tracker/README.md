@@ -44,6 +44,27 @@ npm run preview    # Serve the production build locally
 npm run typecheck  # Type-check only, no build output
 ```
 
+## Running in Docker (e.g. on your own VPS)
+
+The app is a static site (no backend), so the container just builds it and
+serves the files with nginx.
+
+```bash
+docker compose up -d --build
+```
+
+Then open `http://<your-server>:8080`. Edit the port mapping in
+`docker-compose.yml` if 8080 is already taken, or put a reverse proxy
+(nginx, Caddy, Traefik) in front of it for a domain name and HTTPS —
+point the proxy at this container's port 8080 (or whatever you mapped it
+to). To update after pulling new code: `docker compose up -d --build`
+again.
+
+Since everything runs client-side, each browser/device that visits your
+server has its own independent, unshared copy of the workout data — the
+container itself holds no data and there's nothing to back up on the
+server side. Use the in-app JSON export if you want a backup.
+
 ## Your data
 
 All workout data lives in your browser's IndexedDB, scoped to the origin

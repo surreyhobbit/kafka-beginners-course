@@ -1,0 +1,8 @@
+services:
+  workout-tracker:
+    build: .
+    container_name: workout-tracker
+    restart: unless-stopped
+    ports:
+      # host_port:container_port — change 8080 if that port is taken on your VPS
+      - "8080:80"
